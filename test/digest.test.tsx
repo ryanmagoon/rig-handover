@@ -127,7 +127,8 @@ describe('GET /digest/:night', () => {
   it('mentions the lines that did not parse, and still renders the rows that did', async () => {
     const { status, html } = await getPage(BAD_NIGHT);
     expect(status).toBe(200);
-    expect(html).toContain("didn't parse");
+    // hono/jsx escapes the apostrophe as &#39;
+    expect(html).toMatch(/1 line in the log didn(?:'|&#39;)t parse/);
     expect(html).toContain('alpha-job');
     expect(html).toContain('zeta-job');
   });
